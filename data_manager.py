@@ -9,7 +9,7 @@ class DataManager():
         db.session.add(new_user)
         db.session.commit()
 
-    def get_user(self):
+    def get_users(self):
         return User.query.all()
 
     def get_movies(self, user_id):
@@ -27,16 +27,7 @@ class DataManager():
 
     def update_movie(self, movie_id, new_title):
         movie = Movie.query.get(movie_id)
-        movie_info = fetch_from_omdbapi.fetch_movie_info(new_title)
-        name = movie_info["Title"]
-        director = movie_info["Director"]
-        year = movie_info["Year"]
-        poster_url = movie_info["Poster"]
-
-        movie.title = name
-        movie.director = director
-        movie.year = year
-        movie.poster_url = poster_url
+        movie.name = new_title
         db.session.commit()
 
     def delete_movie(self, movie_id):
