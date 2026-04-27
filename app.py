@@ -41,25 +41,32 @@ def create_user():
 @app.route('/users/<int:user_id>/movies', methods=['GET'])
 def get_movies(user_id):
     """Shows a list of movies for a user."""
-    pass
+    user = data_manager.get_user_by_id(user_id)
+    return render_template("movies.html", movies=data_manager.get_movies(user_id), user=user)
 
 
 @app.route('/users/<int:user_id>/movies', methods=['POST'])
 def add_movie(user_id):
     """Adds a new movie for user to the database."""
-    pass
+    movie_title = request.form.get("movie_title")
+    movie_year = request.form.get("movie_year")
+    data_manager.add_movie(movie_title, user_id)
+    return redirect(url_for('get_movies', movies=data_manager.get_movies(user_id), user_id=user_id))
 
 
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/update', methods=['POST'])
 def update_movie(user_id, movie_id):
     """Updates a movie title manually for user to the database."""
-    pass
+    new_title = request.form.get("new_title")
+    data_manager.update_movie(movie_id, new_title)
+    return redirect(url_for('get_movies', movies=data_manager.get_movies(user_id), user_id=user_id))
 
 
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/delete', methods=['POST'])
 def delete_movie(user_id, movie_id):
     """Deletes a movie for user to the database."""
-    pass
+    data_manager.delete_movie(movie_id)
+    return redirect(url_for('get_movies', movies=data_manager.get_movies(user_id), user_id=user_id))
 
 
 if __name__ == '__main__':
