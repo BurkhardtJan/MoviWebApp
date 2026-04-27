@@ -34,6 +34,8 @@ def list_users():
 def create_user():
     """Adds a new user to the database."""
     new_user = request.form.get("new_user")
+    if not new_user:
+        return redirect(url_for('index'))
     try:
         data_manager.create_user(new_user)
     except Exception as e:
@@ -55,7 +57,8 @@ def get_movies(user_id):
 def add_movie(user_id):
     """Adds a new movie for user to the database."""
     movie_title = request.form.get("movie_title")
-    movie_year = request.form.get("movie_year")
+    if not movie_title:
+        return redirect(url_for('get_movies', movies=data_manager.get_movies(user_id), user_id=user_id))
     try:
         data_manager.add_movie(movie_title, user_id)
     except Exception as e:

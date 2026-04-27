@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Movies for {{ user.name }}</h1>
-<a href="{{ url_for('index') }}">← Back to Users</a>
-<ul class="movie-list">
+<form action="{{ url_for('index') }}" method="get">
+    <button type="submit">← Back to Users</button>
+</form>
+<div class="movie-list">
     {% for movie in movies %}
     <div class="movie">
         <img src="{{ movie.poster_url }}" alt="{{ movie.name }}">
@@ -13,16 +15,15 @@
         <p>Year: {{ movie.year }}</p>
         <p>Director: {{ movie.director }}</p>
         <form action="{{ url_for('delete_movie', movie_id=movie.id, user_id=user.id) }}" method="post">
-            <button type="submit">Delete</button>
+            <button class="delete" type="submit">Delete</button>
         </form>
     </div>
     {% endfor %}
-</ul>
+</div>
 <div class="add_new_movie">
     <h3>Add New Movie</h3>
     <form action="{{ url_for('add_movie', user_id=user.id) }}" method="post">
         <input type="text" name="movie_title" placeholder="Movie title">
-        <input type="number" name="movie_year" placeholder="Year (optional)">
         <button type="submit">Add New Movie</button>
     </form>
 </div>

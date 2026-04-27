@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+          rel="stylesheet">
 </head>
 <body>
+<header>
+    <div>
+        <a href="{{ url_for('index') }}" class="logo">🎬MoviWebApp</span></a>
+    </div>
+</header>
 <main class="container">
     {% block content %}{% endblock %}
 </main>
+<footer class="main-footer">
+    <div class="container">
+        <p>&copy; 2026 MoviWebApp </p>
+    </div>
+</footer>
 </body>
 </html>

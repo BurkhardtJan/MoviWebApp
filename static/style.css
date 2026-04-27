@@ -1,0 +1,100 @@
+:root {
+    --primary-color: #e8a702;
+    --bg-color: #3975c5;
+    --text-color: #ffffff;
+    --card-bg: #021e5a;
+    --accent-color: #044c18;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h3, .logo {
+    color: var(--primary-color);
+    font-family: "Goldman";
+}
+
+.logo {
+    text-decoration: none;
+    font-size: 28px;
+}
+
+.movie-list, .user-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.movie, .user-entry, .add_new_user, .add_new_movie {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+    text-align: left;
+    transition: transform 0.2s; /* Kleiner Animationseffekt */
+}
+
+.movie:hover, .user-entry:hover, .add_new_user:hover, .add_new_movie:hover {
+    transform: scale(1.03); /* Karte wird beim Drüberfahren leicht größer */
+}
+
+.movie {
+    text-align: center;
+}
+
+.movie img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin-top: 5px;
+    font-weight: bold;
+    transition: background 0.3s;
+    background-color: var(--accent-color);
+    color: white;
+}
+
+button.delete {
+    background-color: red;
+}
+
+button:hover {
+    filter: brightness(1.2); /* Wird etwas heller beim Hovern */
+}
+
+input {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background: #6b80ae;
+    color: black;
+}
+
+input::placeholder {
+    color: #a11135;
+    opacity: 1;
+}
+
