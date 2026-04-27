@@ -1,9 +1,12 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, abort
+from flask import Flask, render_template, request, redirect, url_for, abort, flash
 from data_manager import DataManager
 from models import db, Movie
+from dotenv import load_dotenv
 
+load_dotenv()
 app = Flask(__name__)
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 data_dir = os.path.join(basedir, 'data')
@@ -40,8 +43,11 @@ def create_user():
         data_manager.create_user(new_user)
     except Exception as e:
         print("An error occurred: ", str(e), 500)
-        return "An error occurred: " + str(e), 500
-    return redirect(url_for('index'))
+        flash(f"An error occurred: {str(e)}", "error")
+    else:
+        flash(f"Successfully added user: {new_user}", "success")
+    finally:
+        return redirect(url_for('index'))
 
 
 @app.route('/users/<int:user_id>/movies', methods=['GET'])
@@ -63,8 +69,11 @@ def add_movie(user_id):
         data_manager.add_movie(movie_title, user_id)
     except Exception as e:
         print("An error occurred: ", str(e), 500)
-        return "An error occurred: " + str(e), 500
-    return redirect(url_for('get_movies', movies=data_manager.get_movies(user_id), user_id=user_id))
+        flash(f"An error occurred: {str(e)}", "error")
+    else:
+        flash(f"Successfully added movie: {movie_title}", "success")
+    finally:
+        return redirect(url_for('get_movies', movies=data_manager.get_movies(user_id), user_id=user_id))
 
 
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/update', methods=['POST'])
@@ -75,8 +84,11 @@ def update_movie(user_id, movie_id):
         data_manager.update_movie(movie_id, new_title)
     except Exception as e:
         print("An error occurred: ", str(e), 500)
-        return "An error occurred: " + str(e), 500
-    return redirect(url_for('get_movies', movies=data_manager.get_movies(user_id), user_id=user_id))
+        flash(f"An error occurred: {str(e)}", "error")
+    else:
+        flash(f"Successfully updated movie: {new_title}", "success")
+    finally:
+        return redirect(url_for('get_movies', movies=data_manager.get_movies(user_id), user_id=user_id))
 
 
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/delete', methods=['POST'])
@@ -86,8 +98,11 @@ def delete_movie(user_id, movie_id):
         data_manager.delete_movie(movie_id)
     except Exception as e:
         print("An error occurred: ", str(e), 500)
-        return "An error occurred: " + str(e), 500
-    return redirect(url_for('get_movies', movies=data_manager.get_movies(user_id), user_id=user_id))
+        flash(f"An error occurred: {str(e)}", "error")
+    else:
+        flash(f"Successfully deleted movie", "success")
+    finally:
+        return redirect(url_for('get_movies', movies=data_manager.get_movies(user_id), user_id=user_id))
 
 
 @app.errorhandler(404)

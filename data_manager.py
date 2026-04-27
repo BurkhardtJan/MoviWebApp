@@ -25,6 +25,8 @@ class DataManager():
     def add_movie(self, movie, user_id):
         """Function for adding new movie form user to database"""
         movie_info = fetch_from_omdbapi.fetch_movie_info(movie)
+        if movie_info["Response"] == "False":
+            raise Exception(movie_info["Error"])
         name = movie_info["Title"]
         director = movie_info["Director"]
         year = movie_info["Year"]
